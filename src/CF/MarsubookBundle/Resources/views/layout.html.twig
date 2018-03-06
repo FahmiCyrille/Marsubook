@@ -1,0 +1,28 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }}
+{% endblock %}
+
+{% block lien %}
+<button type="button" class="btn btn-default  btn-block"> <a href="{{ path('cf_marsubook_edit', {'id': app.user.marsu.id}) }}"> Modifier mes Informations</a></button>
+{% endblock %}
+
+{% block body %}
+
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+
+
+  {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
+  <h1>Notre Marsu Team !</h1>
+
+  <hr>
+
+  {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+  {% block cfmarsubook_body %}
+  {% endblock %}
+{% else %}
+<h1> Veuillez-vous authentifier ou vous inscrire pour pouvoir continuer. </h1>
+{% endif %}
+{% endblock %}

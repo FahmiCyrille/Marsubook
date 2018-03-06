@@ -1,0 +1,4 @@
+services:
+#    cf_marsubook.example:
+#        class: CF\MarsubookBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

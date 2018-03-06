@@ -1,0 +1,40 @@
+{% extends "CFMarsubookBundle::layout.html.twig" %}
+
+{% block title %}
+  Profil - {{ parent() }}
+{% endblock %}
+
+{% block cfmarsubook_body %}
+
+  <h2>Voici le profil de : {{marsu.prenom}} </h2>
+  <p> <strong> Sexe : </strong> {{marsu.sexe}} </p>
+  <p> <strong> Prenom : </strong> {{marsu.prenom}} </p>
+  <p> <strong> Date de naissance : </strong> {{marsu.naissance|date('d/m/Y')}} </p>
+  <p> <strong> Taille : </strong> {{marsu.taille}} cm </p>
+  <p> <strong> Nourriture : </strong> {{marsu.nourriture}} </p>
+
+  <p>
+    <a href="{{ path('cf_marsubook_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Accueil - Retour à la liste
+    </a>
+
+    {% if app.user.marsu.id == marsu.id %}
+    <a href="{{ path('cf_marsubook_edit', {'id': marsu.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modifier mon profil
+    </a>
+
+    {% endif %}
+
+    {% if app.user.marsu.id != marsu.id %}
+    <a href="{{ path('cf_marsubook_add', {'id1': marsu.id,'id2': app.user.marsu.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Ajouter en Ami
+    </a>
+
+    {% endif %}
+
+
+  </p>
+{% endblock %}

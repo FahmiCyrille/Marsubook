@@ -1,0 +1,60 @@
+{# app/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}CF MarsuBook{% endblock %}</title>
+
+  {% block stylesheets %}
+  {# On charge le CSS de bootstrap depuis le site directement #}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  {% endblock %}
+</head>
+
+<body>
+  <div class="container">
+    <div id="header" class="jumbotron">
+      <h1>Bienvenu sur le Facebook pour Marsupilami !</h1>
+      <p>
+        Ceci est mon projet réalisé afin d'integrer l'équipe Appartoo !
+      </p>
+      <h2><span class="col-sm-12">Menu</span></h2>
+
+      <button type="button" class="btn btn-default  btn-block"> <a href="{{ path('cf_marsubook_home') }}">Accueil </a></button>
+
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+      {% block lien %}
+      {% endblock %}
+      <button type="button" class="btn btn-default  btn-block"> <a href="{{ path('fos_user_security_logout') }}">Connecté en tant que {{ app.user.username }} - Déconnexion</a></button>
+
+      {% else %}
+      <button type="button" class="btn btn-default btn-block"> <a href="{{ path('fos_user_security_login') }}">Connexion</a></button>
+      <button type="button" class="btn btn-default btn-block"> <a href="http://localhost/Symfony/web/app_dev.php/Marsubook/register/">Inscription</a></button>
+      {% endif %}
+
+
+    </div>
+    <div id="content" class="col-md-9">
+      {% block body %}
+      {% endblock %}
+    </div>
+  </div>
+
+  <hr>
+
+  <footer>
+    <p>Cyrille Fahmi © {{ 'now'|date('Y') }}</p>
+  </footer>
+</div>
+
+{% block javascripts %}
+{# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+</body>
+</html>

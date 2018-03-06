@@ -1,0 +1,42 @@
+cf_marsubook_home:
+    path:     /{page}
+    defaults:
+      _controller: CFMarsubookBundle:Marsu:home
+      page:  1
+    requirements:
+      page: \d+
+
+cf_marsubook_inscription:
+    path:     /inscription
+    defaults:
+      _controller: CFMarsubookBundle:Marsu:inscription
+
+
+cf_marsubook_profil:
+    path:     /profil/{id}
+    defaults:
+      _controller: CFMarsubookBundle:Marsu:profil
+    requirements:
+      id: \d+
+
+cf_marsubook_edit:
+    path:     /edit/{id}
+    defaults:
+      _controller: CFMarsubookBundle:Marsu:edit
+    requirements:
+      id: \d+
+
+cf_marsubook_delete:
+    path:     /delete/{id}
+    defaults:
+      _controller: CFMarsubookBundle:Marsu:delete
+    requirements:
+      id: \d+
+
+cf_marsubook_add:
+    path:     /add/{id1}/{id2}
+    defaults:
+      _controller: CFMarsubookBundle:Marsu:add
+    requirements:
+      id1: \d+
+      id2: \d+

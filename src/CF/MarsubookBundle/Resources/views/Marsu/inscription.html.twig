@@ -1,0 +1,15 @@
+{% extends "CFMarsubookBundle::layout.html.twig" %}
+
+{% block title %}
+  Inscription - {{ parent() }}
+{% endblock %}
+
+{% block cfmarsubook_body %}
+
+<h3>Formulaire d'inscription</h3>
+
+<div class="well">
+  {{ form(form) }}
+</div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "CFMarsubookBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+
+{% block cfmarsubook_body %}
+
+  <h3>Voici la liste de nos Marsu inscrient: </h3>
+
+  <ul>
+    {% for marsu in listMarsu %}
+      <div class="list-group">
+        <a href="{{ path('cf_marsubook_profil', {'id': marsu.id}) }}" class="list-group-item">
+          {{ marsu.prenom }}
+        </a>
+
+      </div>
+    {% else %}
+      <li>Pas (encore !) d'annonces</li>
+    {% endfor %}
+  </ul>
+
+
+{% endblock %}

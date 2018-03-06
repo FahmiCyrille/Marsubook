@@ -1,0 +1,24 @@
+CF\MarsubookBundle\Entity\Marsu:
+    type: entity
+    table: null
+    repositoryClass: CF\MarsubookBundle\Repository\MarsuRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        prenom:
+            type: string
+            length: 255
+        sexe:
+            type: string
+            length: 255
+        taille:
+            type: integer
+        naissance:
+            type: date
+        nourriture:
+            type: text
+    lifecycleCallbacks: {  }

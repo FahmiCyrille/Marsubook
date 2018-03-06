@@ -1,0 +1,22 @@
+{% extends "CFMarsubookBundle::layout.html.twig" %}
+
+{% block title %}
+  Modification - {{ parent() }}
+{% endblock %}
+
+{% block cfmarsubook_body %}
+
+<h3>Modification des données</h3>
+
+{% if app.user.marsu.id == marsu.id %}
+<div class="well">
+  {{ form(form) }}
+</div>
+{% else %}
+<div class="alert alert-danger">
+  <strong>ERREUR!</strong> Interdiction d'acceder à cette page!
+</div>
+{% endif %}
+
+
+{% endblock %}
