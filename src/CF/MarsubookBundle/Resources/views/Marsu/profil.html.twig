@@ -14,12 +14,18 @@
   <p> <strong> Nourriture : </strong> {{marsu.nourriture}} </p>
 
   <p>
-    <a href="{{ path('cf_marsubook_home') }}" class="btn btn-default">
-      <i class="glyphicon glyphicon-chevron-left"></i>
-      Accueil - Retour à la liste
-    </a>
 
     {% if app.user.marsu.id == marsu.id %}
+    <h3> <strong> Voici ma liste d'ami : </strong> </h3>
+    {% for user in friends %}
+      <div class="list-group">
+        <a href="{{ path('cf_marsubook_profil', {'id': user.id}) }}" class="list-group-item">
+          {{ user.username }}
+        </a>
+      </div>
+    {% else %}
+      <li>Pas (encore !) d'ami</li>
+    {% endfor %}
     <a href="{{ path('cf_marsubook_edit', {'id': marsu.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-edit"></i>
       Modifier mon profil
@@ -27,14 +33,48 @@
 
     {% endif %}
 
-    {% if app.user.marsu.id != marsu.id %}
+    <a href="{{ path('cf_marsubook_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Accueil - Retour à la liste
+    </a>
+
+    {% set break = false %}
+    {% if friends != null %}
+    {% for i in 0..(friends|length)-1 %}
+
+      {% if (app.user.marsu.id != marsu.id) and (marsu.id ==  friends[i].id) and (not break) %}
+
+      {% set break = true %}
+
+      {% endif %}
+
+    {% endfor %}
+
+    {% if  not break and (app.user.marsu.id != marsu.id) %}
     <a href="{{ path('cf_marsubook_add', {'id1': marsu.id,'id2': app.user.marsu.id}) }}" class="btn btn-default">
       <i class="glyphicon glyphicon-edit"></i>
       Ajouter en Ami
     </a>
+    {% endif %}
+
+    {% if break and (app.user.marsu.id != marsu.id) %}
+    <a href="{{ path('cf_marsubook_delete', {'id1': marsu.id,'id2': app.user.marsu.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Supprimer de mes Amis
+    </a>
+    {% endif %}
 
     {% endif %}
 
+    {% if friends == null and (app.user.marsu.id != marsu.id) %}
+    <a href="{{ path('cf_marsubook_add', {'id1': marsu.id,'id2': app.user.marsu.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Ajouter en Ami
+    </a>
+    {% endif %}
+
+
 
   </p>
+
 {% endblock %}

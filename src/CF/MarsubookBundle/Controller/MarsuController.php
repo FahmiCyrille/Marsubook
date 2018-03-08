@@ -5,7 +5,6 @@ namespace CF\MarsubookBundle\Controller;
 use CF\MarsubookBundle\Entity\Marsu;
 use CF\MarsubookBundle\Form\MarsuEditType;
 use CF\UserBundle\Entity\User;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -40,12 +39,17 @@ class MarsuController extends Controller
     $em = $this->getDoctrine()->getManager();
     $marsu = $em->getRepository('CFMarsubookBundle:Marsu')->find($id);
 
+    $user = $this->get('security.token_storage')->getToken()->getUser();
+    $friends = $user->getMyFriends();
+
+
     if (null === $marsu) {
       throw new NotFoundHttpException("Le marsu d'id ".$id." n'existe pas.");
     }
 
     return $this->render('CFMarsubookBundle:Marsu:profil.html.twig', array(
       'marsu'           => $marsu,
+      'friends'        => $friends,
     ));
 
 
@@ -74,20 +78,23 @@ class MarsuController extends Controller
     ));
   }
 
-  public function deleteAction(Request $request, $id)
+  public function deleteAction(Request $request, $id1, $id2)
   {
     $em = $this->getDoctrine()->getManager();
-    $marsu = $em->getRepository('CFMarsubookBundle:Marsu')->find($id);
+    $user1 = $em->getRepository('CFUserBundle:User')->find($id1);
+    $user2 = $em->getRepository('CFUserBundle:User')->find($id2);
+    $marsu = $em->getRepository('CFMarsubookBundle:Marsu')->find($id1);
 
-    if (null === $marsu) {
-      throw new NotFoundHttpException("Le marsu d'id ".$id." n'existe pas.");
-    }
-
-    $em->remove($marsu);
+    $user1->removeMyFriend($user2);
+    $em->persist($user1);
     $em->flush();
-    $request->getSession()->getFlashBag()->add('info', "Le marsu a bien été supprimé.");
-    return $this->redirectToRoute('cf_marsubook_home');
 
+    $user = $this->get('security.token_storage')->getToken()->getUser();
+    $friends = $user->getMyFriends();
+
+
+    return $this->redirectToRoute('cf_marsubook_home'
+    );
   }
 
   public function editAction($id, Request $request)
@@ -118,14 +125,19 @@ class MarsuController extends Controller
     $em = $this->getDoctrine()->getManager();
     $user1 = $em->getRepository('CFUserBundle:User')->find($id1);
     $user2 = $em->getRepository('CFUserBundle:User')->find($id2);
-    $marsu = $em->getRepository('CFMarsubookBundle:Marsu')->find($id2);
-
+    $marsu = $em->getRepository('CFMarsubookBundle:Marsu')->find($id1);
 
     $user1->addMyFriend($user2);
     $em->persist($user1);
     $em->flush();
+
+    $user = $this->get('security.token_storage')->getToken()->getUser();
+    $friends = $user->getMyFriends();
+
+
     return $this->render('CFMarsubookBundle:Marsu:profil.html.twig', array(
       'marsu'           => $marsu,
+      'friends'        => $friends,
     ));
 
 

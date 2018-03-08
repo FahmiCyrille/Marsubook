@@ -28,12 +28,15 @@
       {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
       {% block lien %}
       {% endblock %}
+      <button type="button" class="btn btn-default  btn-block"> <a href="{{ path('cf_marsubook_profil', {'id': app.user.marsu.id}) }}">Mon Profil</a></button>
+
       <button type="button" class="btn btn-default  btn-block"> <a href="{{ path('fos_user_security_logout') }}">Connecté en tant que {{ app.user.username }} - Déconnexion</a></button>
 
       {% else %}
       <button type="button" class="btn btn-default btn-block"> <a href="{{ path('fos_user_security_login') }}">Connexion</a></button>
       <button type="button" class="btn btn-default btn-block"> <a href="http://localhost/Symfony/web/app_dev.php/Marsubook/register/">Inscription</a></button>
       {% endif %}
+
 
 
     </div>
